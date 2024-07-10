@@ -65,7 +65,7 @@ extern "C" void app_main(void){
 
 
     std::thread listener(listener_thread);
-    std::thread execution(actuator_thread);
+    std::thread actuator(actuator_thread);
     
     while(1){   
         // Do nothing forever (subject to change)

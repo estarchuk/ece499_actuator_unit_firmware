@@ -55,7 +55,6 @@ extern "C" void app_main()
 
     while (true)
     {
-        //std::cout << "uh oh stinky" << std::endl;
         // CAN stack runs in other threads. Do nothing forever.
         vTaskDelay(10/portTICK_PERIOD_MS);
     }
