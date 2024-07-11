@@ -11,6 +11,8 @@
 #define nozzle_1 GPIO_NUM_5
 #define nozzle_2 GPIO_NUM_6
 #define nozzle_3 GPIO_NUM_7
+#define isobus_tx GPIO_NUM_10
+#define isobus_rx GPIO_NUM_9
 
 // Global queues
 std::queue<int> receiver = {};
@@ -106,7 +108,7 @@ void actuator_thread(void){
 // Would like to move setup to function but too much local stuff at this time (10 July 2024)
 extern "C" void app_main()
 {
-    twai_general_config_t twaiConfig = TWAI_GENERAL_CONFIG_DEFAULT(GPIO_NUM_10, GPIO_NUM_9, TWAI_MODE_NORMAL);
+    twai_general_config_t twaiConfig = TWAI_GENERAL_CONFIG_DEFAULT(isobus_tx, isobus_rx, TWAI_MODE_NORMAL);
     twai_timing_config_t twaiTiming = TWAI_TIMING_CONFIG_250KBITS();
     twai_filter_config_t twaiFilter = TWAI_FILTER_CONFIG_ACCEPT_ALL();
     std::shared_ptr<isobus::CANHardwarePlugin> canDriver = std::make_shared<isobus::TWAIPlugin>(&twaiConfig, &twaiTiming, &twaiFilter);
