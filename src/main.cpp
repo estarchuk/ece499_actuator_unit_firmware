@@ -108,6 +108,8 @@ void actuator_thread(void){
 // Would like to move setup to function but too much local stuff at this time (10 July 2024)
 extern "C" void app_main()
 {
+    gpio_setup();
+    /*
     twai_general_config_t twaiConfig = TWAI_GENERAL_CONFIG_DEFAULT(isobus_tx, isobus_rx, TWAI_MODE_NORMAL);
     twai_timing_config_t twaiTiming = TWAI_TIMING_CONFIG_250KBITS();
     twai_filter_config_t twaiFilter = TWAI_FILTER_CONFIG_ACCEPT_ALL();
@@ -142,10 +144,11 @@ extern "C" void app_main()
     std::array<std::uint8_t, isobus::CAN_DATA_LENGTH> messageData = {1}; // Data is just all zeros
 
     isobus::CANNetworkManager::CANNetwork.send_can_message(0xEF00, messageData.data(), isobus::CAN_DATA_LENGTH, myECU);
+    */
 
     // Start threads after ISObus setup
-    std::thread listener(listener_thread);
-    std::thread actuator(actuator_thread);
+    //std::thread listener(listener_thread);
+    //std::thread actuator(actuator_thread);
 
     while (true)
     {
