@@ -141,9 +141,10 @@ extern "C" void app_main()
 
     while (true)
     {
+        uart_get_buffered_data_len(uart_num, (size_t*)&length);
         // CAN stack runs in other threads. Do nothing forever.
-        if(uart_get_buffered_data_len(uart_num, (size_t*)&length)){
-            uart_read_bytes(uart_num, data, length, 100);
+        if(uart_read_bytes(uart_num, data, length, 100)){
+            printf("%d\n", data[0]);
             switch(data[0]){
                 case 0:
                     gpio_set_level(nozzle_0, !nozzle_state_0);
