@@ -144,6 +144,7 @@ extern "C" void app_main()
         // CAN stack runs in other threads. Do nothing forever.
         ESP_ERROR_CHECK(uart_get_buffered_data_len(uart_num, (size_t*)&length));
         length = uart_read_bytes(uart_num, data, length, 100);
+        printf("%s\n", data);
         vTaskDelay(10/portTICK_PERIOD_MS);
     }
 
