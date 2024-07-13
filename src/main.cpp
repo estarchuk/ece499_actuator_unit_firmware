@@ -142,9 +142,32 @@ extern "C" void app_main()
     while (true)
     {
         // CAN stack runs in other threads. Do nothing forever.
-        ESP_ERROR_CHECK(uart_get_buffered_data_len(uart_num, (size_t*)&length));
-        length = uart_read_bytes(uart_num, data, length, 100);
-        printf("%s\n", data);
+        if(uart_get_buffered_data_len(uart_num, (size_t*)&length)){
+            uart_read_bytes(uart_num, data, length, 100);
+            switch(data[0]){
+                case 0:
+                    gpio_set_level(nozzle_0, !nozzle_state_0);
+                    nozzle_state_0 = !nozzle_state_0;
+                    break;
+                case 1:
+                    gpio_set_level(nozzle_1, !nozzle_state_1);
+                    nozzle_state_1 = !nozzle_state_1;
+                    break;
+                case 2:
+                    gpio_set_level(nozzle_2, !nozzle_state_2);
+                    nozzle_state_2 = !nozzle_state_2;
+                    break;
+                case 3:
+                    gpio_set_level(nozzle_3, !nozzle_state_3);
+                    nozzle_state_3 = !nozzle_state_3;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //length = uart_read_bytes(uart_num, data, length, 100);
+        //printf("%s\n", data);
         vTaskDelay(10/portTICK_PERIOD_MS);
     }
 
