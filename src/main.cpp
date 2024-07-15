@@ -112,6 +112,12 @@ void actuator_thread(void){
 // Would like to move setup to function but too much local stuff at this time (10 July 2024)
 extern "C" void app_main()
 {
+    // There is an odd issue where the Command Unit gets into a bad state if the actuator unit
+    // is powered on first. This typically does not occur, however, if rebooted quickly the
+    // capacitors will not be fully discharged and the Actuator Unit will power on too quickly.
+    // Having the actuator wait for a moment on power up mitigates this edge case.
+    sleep(1);
+    
     gpio_setup();
     
     const uart_port_t uart_num = UART_NUM_1;
